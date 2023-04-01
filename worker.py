@@ -11,9 +11,10 @@ celery.config_from_object('celeryconfig')
 
 
 @celery.task()
-def start_task(prompt, output_file_name):
+def start_task(prompt, speaker_index, output_file_name):
     directory = get_new_dir()
-    output_path = generate_tts(prompt, directory, output_file_name)
+    output_path = generate_tts(
+        prompt, speaker_index, directory, output_file_name)
     url = upload_video(output_path, output_file_name)
     cleanup(directory)
     return url
